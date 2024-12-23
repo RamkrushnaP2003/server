@@ -1,0 +1,103 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/user/new-user",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/new-user",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/test",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/test",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/upload-profile-image",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/upload-profile-image",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/profile-image/{userId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/profile-image/{userId}",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/login",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{userId}/publish-book",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/{userId}/publish-book",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{userId}/update-book/{isbn}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/{userId}/update-book/{isbn}",
+      "UpstreamHttpMethod": ["PUT"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{userId}/delete-book/{isbn}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/{userId}/delete-book/{isbn}",
+      "UpstreamHttpMethod": ["DELETE"]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5231"
+  }
+}
