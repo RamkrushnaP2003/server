@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "nJteZDHylv8tdGhlXQuPUooK3aDgoUsBF9DiPOiVcEg=",
+  "Hash": "MluuNiGbX6fYdPpzeeHJ+4GPifUddfSa2MFWa1zRlQA=",
   "Source": "server",
   "BasePath": "_content/server",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/uploads/676542ef1b0f81d868bb2da6_male_model.avif"
+    },
+    {
+      "Identity": "/home/ram/BookStoreManagement/server/UserApi/wwwroot/uploads/6768ff5f85524bddeaaf2e6b_male_model.avif",
+      "SourceId": "server",
+      "SourceType": "Discovered",
+      "ContentRoot": "/home/ram/BookStoreManagement/server/UserApi/wwwroot/",
+      "BasePath": "_content/server",
+      "RelativePath": "uploads/6768ff5f85524bddeaaf2e6b_male_model.avif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/uploads/6768ff5f85524bddeaaf2e6b_male_model.avif"
     }
   ]
 }

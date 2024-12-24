@@ -47,3 +47,4 @@
 /home/ram/BookStoreManagement/server/ApiGateway/bin/Debug/net8.0/development/ocelot.user.json
 /home/ram/BookStoreManagement/server/ApiGateway/bin/Debug/net8.0/ocelot.json
 /home/ram/BookStoreManagement/server/ApiGateway/bin/Debug/net8.0/development/ocelot.json
+/home/ram/BookStoreManagement/server/ApiGateway/obj/Debug/net8.0/ApiGateway.sourcelink.json

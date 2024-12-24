@@ -279,6 +279,214 @@ namespace UserApi.Controllers
             }
         }
 
+        [HttpPost("{userId}/add-to-wishlist/{isbn}")]
+        public async Task<IActionResult> AddToWishlist(string userId, string isbn)
+        {
+            try
+            {
+                // Fetch the user from MongoDB by userId
+                var user = await _users.Find(u => u.UserId == userId).FirstOrDefaultAsync();
+                if (user == null)
+                {
+                    return NotFound(new { message = "User not found." });
+                }
+
+                // Check if the book exists in MySQL using a direct SQL query (instead of stored procedure)
+                Book book = null;
+                using (var connection = _mysqlDbContext.CreateConnection())
+                {
+                    try
+                    {
+                        await connection.OpenAsync();
+
+                        // Query to get book details by ISBN
+                        string query = "SELECT book_id, title, author, genre, description, price, stock_quantity, ISBN, publisher, image_link FROM Book WHERE ISBN = @isbn";
+                        using (var command = new MySqlCommand(query, connection))
+                        {
+                            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
+
+                            using (var reader = await command.ExecuteReaderAsync())
+                            {
+                                if (reader.HasRows && await reader.ReadAsync())
+                                {
+                                    book = new Book
+                                    {
+                                        BookId = reader.GetInt32("book_id"), // This maps to book_id in MySQL
+                                        Title = reader.GetString("title"),
+                                        Author = reader.GetString("author"),
+                                        Genre = reader.IsDBNull(reader.GetOrdinal("genre")) ? null : reader.GetString("genre"),
+                                        Description = reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString("description"),
+                                        Price = reader.GetDecimal("price"),
+                                        StockQuantity = reader.GetInt32("stock_quantity"),
+                                        ISBN = reader.GetString("ISBN"),
+                                        Publisher = reader.IsDBNull(reader.GetOrdinal("publisher")) ? null : reader.GetString("publisher"),
+                                        ImageLink = reader.IsDBNull(reader.GetOrdinal("image_link")) ? null : reader.GetString("image_link")
+                                    };
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception dbEx)
+                    {
+                        return StatusCode(500, new { message = "Database connection error.", details = dbEx.Message });
+                    }
+                }
+
+                Console.WriteLine(book.Title);
+
+                // If the book is not found, return a not found response
+                if (book == null)
+                {
+                    return NotFound(new { message = "Book not found in the database." });
+                }
+
+                // Add the book to the user's wishlist if not already present
+                if (user.Wishlist == null)
+                {
+                    user.Wishlist = new List<Book>();
+                }
+
+                // Check if the book is already in the wishlist
+                var existingBook = user.Wishlist.FirstOrDefault(b => b.ISBN == isbn);
+                if (existingBook != null)
+                {
+                    return Conflict(new { message = "Book is already in the wishlist." });
+                }
+
+                // Add the book to the wishlist
+                user.Wishlist.Add(book);
+
+                // Update the user document in MongoDB with the new wishlist
+                var update = Builders<User>.Update.Set(u => u.Wishlist, user.Wishlist);
+                await _users.UpdateOneAsync(u => u.UserId == userId, update);
+
+                return Ok(new { message = "Book added to wishlist successfully!" });
+            }
+            catch (Exception ex)
+            {
+                // Log the error and return a 500 error response
+                Console.WriteLine(ex + " An error occurred while adding the book to the wishlist.");
+                return StatusCode(500, new { message = "An error occurred while adding the book to the wishlist.", details = ex.Message });
+            }
+        }
+
+        [HttpPost("{userId}/add-to-cart/{isbn}")]
+        public async Task<IActionResult> AddToCart(string userId, string isbn)
+        {
+            try
+            {
+                // Fetch the user from MongoDB by userId
+                var user = await _users.Find(u => u.UserId == userId).FirstOrDefaultAsync();
+                if (user == null)
+                {
+                    return NotFound(new { message = "User not found." });
+                }
+
+                // Check if the book exists in MySQL using a direct SQL query (instead of stored procedure)
+                Book book = null;
+                using (var connection = _mysqlDbContext.CreateConnection())
+                {
+                    try
+                    {
+                        await connection.OpenAsync();
+
+                        // Query to get book details by ISBN
+                        string query = "SELECT book_id, title, author, genre, description, price, stock_quantity, ISBN, publisher, image_link FROM Book WHERE ISBN = @isbn";
+                        using (var command = new MySqlCommand(query, connection))
+                        {
+                            command.Parameters.Add(new MySqlParameter("@isbn", isbn));
+
+                            using (var reader = await command.ExecuteReaderAsync())
+                            {
+                                if (reader.HasRows && await reader.ReadAsync())
+                                {
+                                    book = new Book
+                                    {
+                                        BookId = reader.GetInt32("book_id"), // This maps to book_id in MySQL
+                                        Title = reader.GetString("title"),
+                                        Author = reader.GetString("author"),
+                                        Genre = reader.IsDBNull(reader.GetOrdinal("genre")) ? null : reader.GetString("genre"),
+                                        Description = reader.IsDBNull(reader.GetOrdinal("description")) ? null : reader.GetString("description"),
+                                        Price = reader.GetDecimal("price"),
+                                        StockQuantity = reader.GetInt32("stock_quantity"),
+                                        ISBN = reader.GetString("ISBN"),
+                                        Publisher = reader.IsDBNull(reader.GetOrdinal("publisher")) ? null : reader.GetString("publisher"),
+                                        ImageLink = reader.IsDBNull(reader.GetOrdinal("image_link")) ? null : reader.GetString("image_link")
+                                    };
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception dbEx)
+                    {
+                        return StatusCode(500, new { message = "Database connection error.", details = dbEx.Message });
+                    }
+                }
+
+                Console.WriteLine(book.Title);
+
+                // If the book is not found, return a not found response
+                if (book == null)
+                {
+                    return NotFound(new { message = "Book not found in the database." });
+                }
+
+                // Add the book to the user's Cart if not already present
+                if (user.Cart == null)
+                {
+                    user.Cart = new List<Book>();
+                }
+
+                // Check if the book is already in the Cart
+                var existingBook = user.Cart.FirstOrDefault(b => b.ISBN == isbn);
+                if (existingBook != null)
+                {
+                    return Conflict(new { message = "Book is already in the Cart." });
+                }
+
+                // Add the book to the Cart
+                user.Cart.Add(book);
+
+                // Update the user document in MongoDB with the new Cart
+                var update = Builders<User>.Update.Set(u => u.Cart, user.Cart);
+                await _users.UpdateOneAsync(u => u.UserId == userId, update);
+
+                return Ok(new { message = "Book added to Cart successfully!" });
+            }
+            catch (Exception ex)
+            {
+                // Log the error and return a 500 error response
+                Console.WriteLine(ex + " An error occurred while adding the book to the wishlist.");
+                return StatusCode(500, new { message = "An error occurred while adding the book to the wishlist.", details = ex.Message });
+            }
+        }
+
+        [HttpGet("{userId}/cart")]
+        public async Task<IActionResult> GetCart(string userId) {
+            try {
+                var user = await _users.Find(u => u.UserId == userId).FirstOrDefaultAsync();
+                if(user == null) {
+                    return NotFound(new { message = "User Not Found" });
+                }
+                return Ok(new { cart = user.Cart});
+            } catch (Exception ex) {
+                return StatusCode(500, new { message = "An error occure while fetching the cart.", details = ex.Message });
+            }
+        }
+
+        [HttpGet("{userId}/wishlist")]
+        public async Task<IActionResult> GetWishlist(string userId) {
+            try {
+                var user = await _users.Find(u => u.UserId == userId).FirstOrDefaultAsync();
+                if(user == null) {
+                    return NotFound(new { message = "User Not Found" });
+                }
+                return Ok(new { wishlist  = user.Wishlist});
+            } catch (Exception ex) {
+                return StatusCode(500, new { message = "An error occure while fetching the wishlist.", details = ex.Message });
+            }
+        }
+
         [HttpPut("{userId}/update-book/{isbn}")]
         public async Task<IActionResult> UpdateBook(string userId, string isbn, [FromBody] Book book)
         {

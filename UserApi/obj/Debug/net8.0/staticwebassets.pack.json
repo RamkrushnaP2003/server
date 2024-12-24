@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets/uploads/676542ef1b0f81d868bb2da6_male_model.avif"
     },
     {
+      "Id": "/home/ram/BookStoreManagement/server/UserApi/wwwroot/uploads/6768ff5f85524bddeaaf2e6b_male_model.avif",
+      "PackagePath": "staticwebassets/uploads/6768ff5f85524bddeaaf2e6b_male_model.avif"
+    },
+    {
       "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.server.props",
       "PackagePath": "build\\server.props"
     },

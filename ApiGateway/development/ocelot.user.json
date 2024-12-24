@@ -95,6 +95,54 @@
       ],
       "UpstreamPathTemplate": "/user/{userId}/delete-book/{isbn}",
       "UpstreamHttpMethod": ["DELETE"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{userId}/add-to-wishlist/{isbn}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/{userId}/add-to-wishlist/{isbn}",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{userId}/add-to-cart/{isbn}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/{userId}/add-to-cart/{isbn}",
+      "UpstreamHttpMethod": ["POST"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{userId}/cart",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/{userId}/cart",
+      "UpstreamHttpMethod": ["GET"]
+    },
+    {
+      "DownstreamPathTemplate": "/api/user/{userId}/wishlist",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5193
+        }
+      ],
+      "UpstreamPathTemplate": "/user/{userId}/wishlist",
+      "UpstreamHttpMethod": ["GET"]
     }
   ],
   "GlobalConfiguration": {

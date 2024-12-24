@@ -112,3 +112,4 @@
 /home/ram/BookStoreManagement/server/UserApi/obj/Debug/net8.0/server.pdb
 /home/ram/BookStoreManagement/server/UserApi/obj/Debug/net8.0/server.genruntimeconfig.cache
 /home/ram/BookStoreManagement/server/UserApi/obj/Debug/net8.0/ref/server.dll
+/home/ram/BookStoreManagement/server/UserApi/obj/Debug/net8.0/server.sourcelink.json
